@@ -5,11 +5,13 @@ import androidx.appcompat.app.AppCompatActivity
 import com.stashinvest.stashchallenge.App
 import com.stashinvest.stashchallenge.R
 import com.stashinvest.stashchallenge.ui.fragment.MainFragment
+import dagger.android.support.DaggerAppCompatActivity
+import io.reactivex.rxjava3.internal.operators.maybe.MaybeToPublisher.instance
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : DaggerAppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        App.instance.appComponent.inject(this)
+
         setContentView(R.layout.activity_main)
 
         if (savedInstanceState == null) {

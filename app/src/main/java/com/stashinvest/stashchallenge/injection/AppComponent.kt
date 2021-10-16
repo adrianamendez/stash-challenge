@@ -1,20 +1,32 @@
 package com.stashinvest.stashchallenge.injection
 
+import android.app.Application
 import com.stashinvest.stashchallenge.App
-import com.stashinvest.stashchallenge.ui.activity.MainActivity
-import com.stashinvest.stashchallenge.ui.fragment.MainFragment
-import com.stashinvest.stashchallenge.ui.fragment.PopUpDialogFragment
+import dagger.BindsInstance
 import dagger.Component
+import dagger.android.AndroidInjector
+import dagger.android.support.AndroidSupportInjectionModule
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [AppModule::class, NetworkModule::class])
-interface AppComponent {
-    fun inject(app: App)
-    
-    fun inject(activity: MainActivity)
-    
-    fun inject(fragment: MainFragment)
-    
-    fun inject(fragment: PopUpDialogFragment)
+@Component(
+    modules = [
+        AndroidSupportInjectionModule::class,
+        ActivityBuildersModule::class,
+        FragmentBuildersModule::class,
+        ViewModelModule::class,
+        NetworkModule::class,
+        AppModule::class
+    ]
+)
+interface AppComponent : AndroidInjector<App> {
+
+    @Component.Builder
+    interface Builder {
+
+        @BindsInstance
+        fun application(application: Application): Builder
+
+        fun build(): AppComponent
+    }
 }
