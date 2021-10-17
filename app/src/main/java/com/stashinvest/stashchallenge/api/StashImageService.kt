@@ -2,6 +2,7 @@ package com.stashinvest.stashchallenge.api
 
 import com.stashinvest.stashchallenge.api.model.ImageResponse
 import com.stashinvest.stashchallenge.api.model.MetadataResponse
+import io.reactivex.rxjava3.core.Single
 import retrofit2.Call
 import javax.inject.Inject
 
@@ -10,15 +11,15 @@ class StashImageService @Inject constructor() {
     @Inject
     lateinit var api: StashImagesApi
     
-    fun searchImages(phrase: String): Call<ImageResponse> {
+    fun searchImages(phrase: String): Single<ImageResponse> {
         return api.searchImages(phrase, FIELDS, SORT_ORDER)
     }
     
-    fun getImageMetadata(id: String): Call<MetadataResponse> {
+    fun getImageMetadata(id: String): Single<MetadataResponse> {
         return api.getImageMetadata(id)
     }
     
-    fun getSimilarImages(id: String): Call<ImageResponse> {
+    fun getSimilarImages(id: String): Single<ImageResponse> {
         return api.getSimilarImages(id)
     }
     

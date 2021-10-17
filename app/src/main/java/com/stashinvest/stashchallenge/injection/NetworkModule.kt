@@ -1,10 +1,7 @@
 package com.stashinvest.stashchallenge.injection
 
-import android.content.Context
-import android.content.res.Resources
 import com.google.gson.GsonBuilder
 import com.stashinvest.stashchallenge.BuildConfig
-import com.stashinvest.stashchallenge.R
 import com.stashinvest.stashchallenge.api.StashImageInterceptor
 import com.stashinvest.stashchallenge.api.StashImagesApi
 import dagger.Module
@@ -12,6 +9,7 @@ import dagger.Provides
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
@@ -52,6 +50,7 @@ class NetworkModule {
         val retrofit = Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(gsonConverterFactory)
+            .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .client(httpClient)
             .build()
         return retrofit.create(StashImagesApi::class.java)

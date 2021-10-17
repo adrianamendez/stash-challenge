@@ -3,34 +3,24 @@ package com.stashinvest.stashchallenge.ui.fragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import androidx.annotation.Nullable
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider.Factory
 import androidx.recyclerview.widget.GridLayoutManager
-import com.stashinvest.stashchallenge.App
 import com.stashinvest.stashchallenge.R
 import com.stashinvest.stashchallenge.api.StashImageService
-import com.stashinvest.stashchallenge.api.model.ImageResponse
-import com.stashinvest.stashchallenge.api.model.ImageResult
+import com.stashinvest.stashchallenge.common.BaseDaggerFragment
 import com.stashinvest.stashchallenge.databinding.FragmentMainBinding
 import com.stashinvest.stashchallenge.ui.adapter.ViewModelAdapter
 import com.stashinvest.stashchallenge.ui.factory.ImageFactory
 import com.stashinvest.stashchallenge.ui.viewmodel.MainViewModel
 import com.stashinvest.stashchallenge.util.SpaceItemDecoration
-import com.stashinvest.stashchallenge.util.fragmentBinding
-import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.fragment_main.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.stashinvest.stashchallenge.util.hideKeyboard
 import javax.inject.Inject
 
-class MainFragment : DaggerFragment(), Callback<ImageResponse> {
+class MainFragment : BaseDaggerFragment() {
     companion object {
         fun newInstance(): MainFragment {
             return MainFragment()
@@ -63,25 +53,17 @@ class MainFragment : DaggerFragment(), Callback<ImageResponse> {
         binding = FragmentMainBinding.inflate(inflater)
         binding.viewModel = mainViewModel
         binding.lifecycleOwner = this
+        addListeners()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        searchPhrase.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                search()
-                return@setOnEditorActionListener true
-            }
-            false
-        }
-
-        recyclerView.layoutManager = GridLayoutManager(context, 3)
-        recyclerView.adapter = adapter
-        recyclerView.addItemDecoration(SpaceItemDecoration(space, space, space, space))
+        initializeSearch()
+        initializeRecyclerView()
     }
 
-    override fun onResponse(call: Call<ImageResponse>, response: Response<ImageResponse>) {
-        progressBar.visibility = GONE
+    /* override fun onResponse(call: Call<ImageResponse>, response: Response<ImageResponse>) {
+        binding.progressBar.visibility = GONE
 
         if (response.isSuccessful) {
             val images = response.body()?.images ?: listOf()
@@ -92,22 +74,54 @@ class MainFragment : DaggerFragment(), Callback<ImageResponse> {
     }
 
     override fun onFailure(call: Call<ImageResponse>, t: Throwable) {
-        progressBar.visibility = GONE
         //todo - show error
+    } */
+
+    private fun updateImages() {
+        val viewModels = mainViewModel.imagesList.value?.map {
+            imageFactory.createImageViewModel(
+                it,
+                ::onImageLongPress
+            )
+        }
+        viewModels?.let {
+            adapter.setViewModels(it)
+        }
     }
 
-    private fun search() {
-        progressBar.visibility = View.VISIBLE
-        val call = stashImageService.searchImages(searchPhrase.text.toString())
-        call.enqueue(this)
-    }
-
-    private fun updateImages(images: List<ImageResult>) {
-        val viewModels = images.map { imageFactory.createImageViewModel(it, ::onImageLongPress) }
-        adapter.setViewModels(viewModels)
-    }
-
-    fun onImageLongPress(id: String, uri: String?) {
+    private fun onImageLongPress(id: String, uri: String?) {
         //todo - implement new feature
+    }
+
+    private fun addListeners() {
+        mainViewModel.imagesList.observe(viewLifecycleOwner, Observer { updateImages() })
+        mainViewModel.errorEvent.observe(viewLifecycleOwner, Observer { dialogInfo ->
+            dialogInfo?.let { showDialog(it) }
+        })
+        mainViewModel.hideKeyboardEvent.observe(viewLifecycleOwner, Observer {
+          hideAndClearKeyboard()
+        })
+    }
+
+    private fun hideAndClearKeyboard(){
+        binding.searchPhrase.hideKeyboard()
+        binding.searchPhrase.clearFocus()
+    }
+
+    private fun initializeSearch() {
+
+        binding.searchPhrase.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                mainViewModel.searchImages(binding.searchPhrase.text.toString())
+                return@setOnEditorActionListener true
+            }
+            false
+        }
+    }
+
+    private fun initializeRecyclerView() {
+        binding.recyclerView.layoutManager = GridLayoutManager(context, 3)
+        binding.recyclerView.adapter = adapter
+        binding.recyclerView.addItemDecoration(SpaceItemDecoration(space, space, space, space))
     }
 }

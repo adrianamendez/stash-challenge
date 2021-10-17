@@ -3,4 +3,8 @@
     <string name="app_name">StashChallenge</string>
     <string name="search_hint">Search Phrase</string>
     <string name="metadata_title_format">%1$s by %2$s</string>
+
+    <!-- Errors -->
+    <string name="error_title_generic">Oops! Something went wrong.</string>
+    <string name="error_images_search">The application has encountered an unknown error searching the images.</string>
 </resources>
