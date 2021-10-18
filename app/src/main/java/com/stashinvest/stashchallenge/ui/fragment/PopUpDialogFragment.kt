@@ -16,7 +16,6 @@ import com.stashinvest.stashchallenge.ui.adapter.ViewModelAdapter
 import com.stashinvest.stashchallenge.ui.factory.ImageFactory
 import com.stashinvest.stashchallenge.ui.viewmodel.PopUpDialogViewModel
 import com.stashinvest.stashchallenge.util.SpaceItemDecoration
-import dagger.android.support.DaggerDialogFragment
 import javax.inject.Inject
 
 class PopUpDialogFragment : BaseDaggerDialogFragment() {

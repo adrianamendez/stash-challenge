@@ -5,13 +5,9 @@ import com.stashinvest.stashchallenge.api.model.ImageResponse
 import com.stashinvest.stashchallenge.api.model.MetadataResponse
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.functions.BiFunction
-import retrofit2.Call
 import javax.inject.Inject
 
-class StashImageService @Inject constructor() {
-
-    @Inject
-    lateinit var api: StashImagesApi
+class StashImageService @Inject constructor(private var api: StashImagesApi) {
 
     fun searchImages(phrase: String): Single<ImageResponse> {
         return api.searchImages(phrase, FIELDS, SORT_ORDER)

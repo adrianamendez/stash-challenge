@@ -1,8 +1,9 @@
-package com.stashinvest.stashchallenge.api.domain
+package com.stashinvest.stashchallenge.util
 
 import android.util.Log
-import com.stashinvest.stashchallenge.api.domain.ILogger.LogLevel
-import com.stashinvest.stashchallenge.api.domain.ILogger.LogLevel.*
+import com.stashinvest.stashchallenge.util.ILogger
+import com.stashinvest.stashchallenge.util.ILogger.LogLevel
+import com.stashinvest.stashchallenge.util.ILogger.LogLevel.*
 import javax.inject.Inject
 
 class LogcatLogger @Inject constructor() : ILogger {

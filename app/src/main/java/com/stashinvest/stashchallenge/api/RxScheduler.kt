@@ -1,4 +1,4 @@
-package com.stashinvest.stashchallenge.api.domain
+package com.stashinvest.stashchallenge.api
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.SingleTransformer

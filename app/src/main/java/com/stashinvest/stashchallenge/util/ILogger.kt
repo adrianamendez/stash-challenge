@@ -1,4 +1,4 @@
-package com.stashinvest.stashchallenge.api.domain
+package com.stashinvest.stashchallenge.util
 
 interface ILogger {
 

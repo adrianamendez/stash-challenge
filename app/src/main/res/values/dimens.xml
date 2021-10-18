@@ -11,6 +11,7 @@
     <dimen name="indicator_height">26dp</dimen>
     <dimen name="spacing_xsmall">4dp</dimen>
     <dimen name="generic_margin_x_small">8dp</dimen>
-    <dimen name="default_border_radius">10dp</dimen>
+    <dimen name="default_border_radius">20dp</dimen>
     <dimen name="card_elevation">2dp</dimen>
+    <dimen name="popup_default_weight">250dp</dimen>
 </resources>

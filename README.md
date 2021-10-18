@@ -1,6 +1,17 @@
 # Stash Challenge #
 
-You are given a semi-complete image searching app. You will be tasked with upgrading the application and adding a brand new feature! We will be looking for code quality, ability to work with existing code base, and demonstration of your android skills.
+
+### To run the challenge ###
+
+Project compiled on AndroidStudio ArticFox 2020.3.1 patch 2
+
+### Please in order to protect the base url and api_key add it to the local.properties file, and i removed the strings for the xml in order to protect it. If you don't add it  the project will not run.  ###
+
+
+
+baseUrl="https://us-central1-stashandroidchallenge.cloudfunctions.net/api/"
+apiKey="88ecd4c66b35da800a96364ceaf3c436" 
+
 
 ### What does the app currently do though? ###
 Currently the app has a search field that you can enter something cool and it will fill the screen will a grid of images.

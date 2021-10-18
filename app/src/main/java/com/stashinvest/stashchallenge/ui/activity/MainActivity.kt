@@ -16,9 +16,9 @@ class MainActivity : DaggerAppCompatActivity() {
 
         if (savedInstanceState == null) {
             supportFragmentManager
-                    .beginTransaction()
-                    .add(R.id.fragmentContainer, MainFragment.newInstance())
-                    .commit()
+                .beginTransaction()
+                .add(R.id.fragmentContainer, MainFragment.newInstance())
+                .commit()
         }
     }
 }

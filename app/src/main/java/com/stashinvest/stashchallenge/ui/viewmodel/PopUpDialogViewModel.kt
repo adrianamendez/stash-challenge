@@ -6,14 +6,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.stashinvest.stashchallenge.R
+import com.stashinvest.stashchallenge.api.IScheduler
 import com.stashinvest.stashchallenge.api.StashImageService
-import com.stashinvest.stashchallenge.api.domain.ILogger
-import com.stashinvest.stashchallenge.api.domain.IScheduler
 import com.stashinvest.stashchallenge.api.model.DetailImageResponse
 import com.stashinvest.stashchallenge.common.DialogInfoUiModel
 import com.stashinvest.stashchallenge.ui.fragment.uimodel.DetailImageUi
 import com.stashinvest.stashchallenge.ui.fragment.uimodel.ImageUi
 import com.stashinvest.stashchallenge.util.EMPTY_STRING
+import com.stashinvest.stashchallenge.util.ILogger
 import com.stashinvest.stashchallenge.util.SingleLiveEvent
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import javax.inject.Inject
@@ -40,7 +40,7 @@ class PopUpDialogViewModel @Inject constructor(
     val imagesList: LiveData<List<ImageUi>> get() = _imagesList
 
     val resultCount: LiveData<Int> get() = _resultCount
-    private var _resultCount =  MutableLiveData(1)
+    private var _resultCount = MutableLiveData(1)
 
     val imageUri: LiveData<String> get() = _imageUri
     private var _imageUri = MutableLiveData(EMPTY_STRING)
@@ -55,8 +55,8 @@ class PopUpDialogViewModel @Inject constructor(
         loadInfoAndRelatedImages()
     }
 
-    private fun setMainImageUri(){
-        if(this.uri.isNotEmpty()){
+    private fun setMainImageUri() {
+        if (this.uri.isNotEmpty()) {
             _imageUri.value = this.uri
         }
     }
@@ -77,11 +77,11 @@ class PopUpDialogViewModel @Inject constructor(
      */
 
     private fun handleInfoAndRelatedImageSuccess(response: DetailImageResponse) {
-         setLoaderVisibility(View.GONE)
-        if(!response.metadataResponse.metadata.isNullOrEmpty()){
-            _imageDetail.value =  DetailImageUi.mapFromDomain(response)
+        setLoaderVisibility(View.GONE)
+        if (!response.metadataResponse.metadata.isNullOrEmpty()) {
+            _imageDetail.value = DetailImageUi.mapFromDomain(response)
         }
-        _imagesList.value = response.imageResponse.images.map {ImageUi.mapFromDomain(it)}
+        _imagesList.value = response.imageResponse.images.map { ImageUi.mapFromDomain(it) }
         _resultCount.value = response.imageResponse.resultCount
     }
 

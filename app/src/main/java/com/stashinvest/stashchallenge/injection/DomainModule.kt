@@ -1,9 +1,9 @@
 package com.stashinvest.stashchallenge.injection
 
-import com.stashinvest.stashchallenge.api.domain.ILogger
-import com.stashinvest.stashchallenge.api.domain.IScheduler
-import com.stashinvest.stashchallenge.api.domain.LogcatLogger
-import com.stashinvest.stashchallenge.api.domain.RxScheduler
+import com.stashinvest.stashchallenge.api.IScheduler
+import com.stashinvest.stashchallenge.api.RxScheduler
+import com.stashinvest.stashchallenge.util.ILogger
+import com.stashinvest.stashchallenge.util.LogcatLogger
 import dagger.Binds
 import dagger.Module
 import javax.inject.Singleton

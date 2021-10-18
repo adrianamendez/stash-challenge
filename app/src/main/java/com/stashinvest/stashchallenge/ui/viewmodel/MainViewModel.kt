@@ -6,13 +6,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.stashinvest.stashchallenge.R
+import com.stashinvest.stashchallenge.api.IScheduler
 import com.stashinvest.stashchallenge.api.StashImageService
-import com.stashinvest.stashchallenge.api.domain.ILogger
-import com.stashinvest.stashchallenge.api.domain.ILogger.LogLevel.ERROR
-import com.stashinvest.stashchallenge.api.domain.IScheduler
 import com.stashinvest.stashchallenge.api.model.ImageResponse
 import com.stashinvest.stashchallenge.common.DialogInfoUiModel
 import com.stashinvest.stashchallenge.ui.fragment.uimodel.ImageUi
+import com.stashinvest.stashchallenge.util.ILogger
+import com.stashinvest.stashchallenge.util.ILogger.LogLevel.ERROR
 import com.stashinvest.stashchallenge.util.SingleLiveEvent
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import javax.inject.Inject

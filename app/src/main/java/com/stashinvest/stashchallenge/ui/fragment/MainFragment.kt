@@ -91,15 +91,15 @@ class MainFragment : BaseDaggerFragment() {
             dialogInfo?.let { showInfoDialog(it) }
         })
         mainViewModel.hideKeyboardEvent.observe(viewLifecycleOwner, Observer {
-          hideAndClearKeyboard()
+            hideAndClearKeyboard()
         })
     }
 
-    fun showInfoDialog(dialogInfoUiModel: DialogInfoUiModel){
+    private fun showInfoDialog(dialogInfoUiModel: DialogInfoUiModel) {
         showDialog(dialogInfoUiModel)
     }
 
-    private fun hideAndClearKeyboard(){
+    private fun hideAndClearKeyboard() {
         binding.searchPhrase.hideKeyboard()
         binding.searchPhrase.clearFocus()
     }

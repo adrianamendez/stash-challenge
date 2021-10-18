@@ -40,7 +40,10 @@ class CustomDialogFragment : DialogFragment() {
             arguments.putInt(ARG_SUBTITLE, messageId)
         }
 
-        fun setPositiveButton(@StringRes positiveButtonText: Int = 0, listener: (() -> Unit)? = null) =
+        fun setPositiveButton(
+            @StringRes positiveButtonText: Int = 0,
+            listener: (() -> Unit)? = null
+        ) =
             apply {
                 arguments.putInt(ARG_POSITIVE_BUTTON, positiveButtonText)
                 onPositiveClickListener = listener
@@ -103,7 +106,7 @@ class CustomDialogFragment : DialogFragment() {
     }
 
 
-    private fun loadParams()  {
+    private fun loadParams() {
         arguments?.run {
             icon = getInt(ARG_ICON)
             title = getInt(ARG_TITLE)
