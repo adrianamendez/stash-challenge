@@ -7,17 +7,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.stashinvest.stashchallenge.R
 import com.stashinvest.stashchallenge.api.StashImageService
-import com.stashinvest.stashchallenge.api.model.ImageResponse
-import com.stashinvest.stashchallenge.api.model.ImageResult
 import com.stashinvest.stashchallenge.api.domain.ILogger
 import com.stashinvest.stashchallenge.api.domain.ILogger.LogLevel.ERROR
 import com.stashinvest.stashchallenge.api.domain.IScheduler
+import com.stashinvest.stashchallenge.api.model.ImageResponse
 import com.stashinvest.stashchallenge.common.DialogInfoUiModel
 import com.stashinvest.stashchallenge.ui.fragment.uimodel.ImageUi
 import com.stashinvest.stashchallenge.util.SingleLiveEvent
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import kotlinx.android.synthetic.main.fragment_main.*
-import retrofit2.Response
 import javax.inject.Inject
 
 private const val TAG = "MainViewModel"
@@ -52,15 +49,14 @@ class MainViewModel @Inject constructor(
         _hideKeyboardEvent.value = true
         compositeDisposable.add(stashImageService.searchImages(phrase)
             .compose(scheduler.applySingleDefaultSchedulers()).subscribe(
-            { handleSearchSuccess(it) },
-            { handleSearchError(it) }
-        )
+                { handleSearchSuccess(it) },
+                { handleSearchError(it) }
+            )
         )
     }
 
     /**
-     * Process the successful search scenario. Hides the loader and
-     * shows the empty state only if the result of the concatenation is empty.
+     * Process the successful search scenario. Hides the loader and trigger the imagesList
      * @param response The results of the search.
      */
 
@@ -68,13 +64,11 @@ class MainViewModel @Inject constructor(
         setLoaderVisibility(GONE)
         val images = response.images
         _imagesList.value = images.map { ImageUi.mapFromDomain(it) }
-      //  updateImages(images)
-
     }
 
     /**
      * Handles the failure search scenario, for this it hides the loader, triggers the error event,
-     * logs the error and show the empty state if there are no previously loaded products.
+     * logs the error
      * @param error The search error.
      */
 
@@ -88,5 +82,7 @@ class MainViewModel @Inject constructor(
         logger.log(TAG, error.toString(), error, ERROR)
     }
 
-
+    override fun onCleared() {
+        compositeDisposable.clear()
+    }
 }

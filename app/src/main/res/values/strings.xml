@@ -7,4 +7,5 @@
     <!-- Errors -->
     <string name="error_title_generic">Oops! Something went wrong.</string>
     <string name="error_images_search">The application has encountered an unknown error searching the images.</string>
+    <string name="error_images_detail_search">The application has encountered an unknown error Detail images.</string>
 </resources>

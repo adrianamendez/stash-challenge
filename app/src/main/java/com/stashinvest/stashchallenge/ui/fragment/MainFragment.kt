@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.stashinvest.stashchallenge.R
 import com.stashinvest.stashchallenge.api.StashImageService
 import com.stashinvest.stashchallenge.common.BaseDaggerFragment
+import com.stashinvest.stashchallenge.common.DialogInfoUiModel
 import com.stashinvest.stashchallenge.databinding.FragmentMainBinding
 import com.stashinvest.stashchallenge.ui.adapter.ViewModelAdapter
 import com.stashinvest.stashchallenge.ui.factory.ImageFactory
@@ -19,6 +20,8 @@ import com.stashinvest.stashchallenge.ui.viewmodel.MainViewModel
 import com.stashinvest.stashchallenge.util.SpaceItemDecoration
 import com.stashinvest.stashchallenge.util.hideKeyboard
 import javax.inject.Inject
+
+private const val TAG = "MainFragment"
 
 class MainFragment : BaseDaggerFragment() {
     companion object {
@@ -62,21 +65,6 @@ class MainFragment : BaseDaggerFragment() {
         initializeRecyclerView()
     }
 
-    /* override fun onResponse(call: Call<ImageResponse>, response: Response<ImageResponse>) {
-        binding.progressBar.visibility = GONE
-
-        if (response.isSuccessful) {
-            val images = response.body()?.images ?: listOf()
-            updateImages(images)
-        } else {
-            //todo - show error
-        }
-    }
-
-    override fun onFailure(call: Call<ImageResponse>, t: Throwable) {
-        //todo - show error
-    } */
-
     private fun updateImages() {
         val viewModels = mainViewModel.imagesList.value?.map {
             imageFactory.createImageViewModel(
@@ -90,17 +78,25 @@ class MainFragment : BaseDaggerFragment() {
     }
 
     private fun onImageLongPress(id: String, uri: String?) {
-        //todo - implement new feature
+        val dialog = PopUpDialogFragment.newInstance(
+            id,
+            uri
+        )
+        activity?.let { dialog.show(it.supportFragmentManager, TAG) }
     }
 
     private fun addListeners() {
         mainViewModel.imagesList.observe(viewLifecycleOwner, Observer { updateImages() })
         mainViewModel.errorEvent.observe(viewLifecycleOwner, Observer { dialogInfo ->
-            dialogInfo?.let { showDialog(it) }
+            dialogInfo?.let { showInfoDialog(it) }
         })
         mainViewModel.hideKeyboardEvent.observe(viewLifecycleOwner, Observer {
           hideAndClearKeyboard()
         })
+    }
+
+    fun showInfoDialog(dialogInfoUiModel: DialogInfoUiModel){
+        showDialog(dialogInfoUiModel)
     }
 
     private fun hideAndClearKeyboard(){

@@ -8,7 +8,7 @@ import com.stashinvest.stashchallenge.ui.viewholder.ImageViewHolder
 import com.stashinvest.stashchallenge.ui.viewmodel.ViewModelType.STASH_IMAGE
 
 class ImageViewModel(private val imageResult: ImageUi,
-                     private val listener: (id: String, uri: String?) -> Unit)
+                     private val listener: ((id: String, uri: String?) -> Unit)?)
     : BaseViewModel<ImageViewHolder>(R.layout.cell_image_layout) {
     
     override fun createItemViewHolder(view: View): ImageViewHolder {
@@ -16,7 +16,10 @@ class ImageViewModel(private val imageResult: ImageUi,
     }
     
     override fun bindItemViewHolder(holder: ImageViewHolder) {
-        holder.bind(imageResult) { listener(imageResult.id, imageResult.thumbUri) }
+        holder.bind(imageResult) {
+            listener?.let {
+                it(imageResult.id, imageResult.thumbUri) }
+            }
     }
     
     override val viewType: ViewModelType

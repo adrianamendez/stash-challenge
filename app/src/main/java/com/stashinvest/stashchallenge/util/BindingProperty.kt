@@ -18,15 +18,3 @@ private abstract class BindingProperty<T, B : ViewDataBinding> : ReadOnlyPropert
 
     abstract fun createBinding(thisRef: T): B
 }
-
-fun <T : ViewDataBinding> activityBinding(@LayoutRes resId: Int): ReadOnlyProperty<Activity, T> =
-    object : BindingProperty<Activity, T>() {
-        override fun createBinding(thisRef: Activity): T =
-            DataBindingUtil.setContentView(thisRef, resId)
-    }
-
-fun <T : ViewDataBinding> fragmentBinding(@LayoutRes resId: Int): ReadOnlyProperty<Fragment, T> =
-    object : BindingProperty<Fragment, T>() {
-        override fun createBinding(thisRef: Fragment): T =
-            DataBindingUtil.inflate(LayoutInflater.from(thisRef.context), resId, null, false)
-    }

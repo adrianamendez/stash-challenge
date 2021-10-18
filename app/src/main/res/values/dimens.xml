@@ -1,4 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="image_space">4dp</dimen>
+    <dimen name="popup_imageview_height">160dp</dimen>
+    <dimen name="title_text_size">16sp</dimen>
+    <dimen name="none_size">0dp</dimen>
+    <dimen name="popup_default_image_height">130dp</dimen>
+    <dimen name="default_margin">16dp</dimen>
+    <dimen name="default_dialog_width">500dp</dimen>
+    <dimen name="indicator_horizontal_margin">2dp</dimen>
+    <dimen name="indicator_height">26dp</dimen>
+    <dimen name="spacing_xsmall">4dp</dimen>
+    <dimen name="generic_margin_x_small">8dp</dimen>
+    <dimen name="default_border_radius">10dp</dimen>
+    <dimen name="card_elevation">2dp</dimen>
 </resources>
