@@ -5,12 +5,6 @@
 
 Project compiled on AndroidStudio ArticFox 2020.3.1 patch 2
 
-### Please in order to protect the base url and api_key add it to the local.properties file, and i removed the strings for the xml in order to protect it. If you don't add it  the project will not run.  ###
-
-
-
-baseUrl="https://us-central1-stashandroidchallenge.cloudfunctions.net/api/"
-apiKey="88ecd4c66b35da800a96364ceaf3c436" 
 
 
 ### What does the app currently do though? ###
